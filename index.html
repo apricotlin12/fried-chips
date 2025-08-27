@@ -78,6 +78,16 @@
       font-weight: 600;
     }
 
+    .event-list li a {
+      display: block;          /* 整個 li 都可點 */
+      color: inherit;          /* 繼承文字顏色 */
+      text-decoration: none;   /* 去掉底線 */
+    }
+    .event-list li a:hover {
+      text-decoration: underline; /* 滑過才顯示底線，使用者知道可點 */
+    }
+
+
     /* 頁尾 */
     footer {
       text-align: center;
@@ -109,9 +119,9 @@
   <main>
     <h2>目前活動：</h2>
     <ul class="event-list">
-      <li>遠征大成功</li>
-      <li>大慶直胤 限時鍛刀</li>
-      <li>夜花奪還作戰 pt 獎勵</li>
+      <li><a href="https://x.com/TOUKEN_STAFF/status/1960254749414187204" target="_blank">遠征大成功三倍小判</a></li>
+      <li><a href="https://x.com/TOUKEN_STAFF/status/1960253163916910929" target="_blank">大慶直胤 限時鍛刀</a></li>
+      <li><a href="https://x.com/TOUKEN_STAFF/status/1960251931374592009" target="_blank">夜花奪還作戰 pt 獎勵</a></li>
     </ul>
     <p>距離活動結束（台灣時間 9/9 (二) 12:00）還有</p>
     <h2 id="timer">OAO</h2>

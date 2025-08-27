@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OO倒數計時器</title>
+  <style>
+    /* 全域設定 */
+    body {
+      margin: 0;
+      font-family: "Microsoft JhengHei", Arial, sans-serif;
+      background-color: #fff;
+      color: #333;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;  /* 讓整個頁面至少滿螢幕高 */
+    }
+
+    /* 頁首背景圖區域 */
+    header {
+      background: url("main_pic.jpg") center/cover no-repeat; /* 換成你的薯條圖片路徑 */
+      color: white;
+      text-align: center;
+      padding: 4rem 1rem;
+      position: relative;
+    }
+
+    /* 半透明遮罩，讓文字更清楚 */
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    header h1 {
+      position: relative;
+      font-size: clamp(2rem, 5vw, 4rem); /* 字體會隨裝置大小縮放 */
+      margin: 0;
+    }
+
+    /* 倒數區塊 */
+    main {
+      text-align: center;
+      padding: 2rem 1rem;
+      flex: 1; /* 撐開，把 footer 推到最下 */
+    }
+
+    main p {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      margin-bottom: 1rem;
+      color: #444;
+    }
+
+    main h2 {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      margin: 0;
+      font-weight: bold;
+    }
+
+    /* 活動清單 */
+    .event-list {
+      list-style: none;           /* 去掉前面的圓點 */
+      padding: 0;
+      margin: 1rem auto;
+      max-width: 500px;
+    }
+
+    .event-list li {
+      background: #fff8e1;        /* 淡黃色底，像活動公告感 */
+      margin: 0.5rem 0;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* 頁尾 */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: white;
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      color: #555;
+    }
+
+    /* 響應式排版：小螢幕時保持字不換行 */
+    @media (max-width: 600px) {
+      header {
+        padding: 3rem 1rem;
+      }
+      main {
+        padding: 1.5rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頁首 -->
+  <header>
+    <h1>活動倒數計時器</h1>
+  </header>
+
+  <!-- 主內容 -->
+  <main>
+    <h2>目前活動：</h2>
+    <ul class="event-list">
+      <li>遠征大成功</li>
+      <li>大慶直胤 限時鍛刀</li>
+      <li>夜花奪還作戰 pt 獎勵</li>
+    </ul>
+    <p>距離活動結束（台灣時間 9/9 (二) 12:00）還有</p>
+    <h2 id="timer">OAO</h2>
+  </main>
+
+  <!-- 頁尾 -->
+  <footer>
+    By 小雀杏
+  </footer>
+
+  <!-- 倒數計時 JavaScript -->
+  <script>
+    // 指定目標時間
+    const target = new Date("2025-09-09T12:00:00+08:00").getTime();
+    const timerElement = document.getElementById("timer");
+
+    function updateTimer() {
+      const now = new Date().getTime();
+      const distance = target - now;
+
+      if (distance <= 0) {
+        timerElement.textContent = "喔不、活動時間到了😭";
+        clearInterval(interval);
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      timerElement.textContent = `${days}天 ${hours}時 ${minutes}分 ${seconds}秒`;
+    }
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+  </script>
+
+</body>
+</html>

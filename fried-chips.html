@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>薯條倒數計時器</title>
+  <style>
+    /* 全域設定 */
+    body {
+      margin: 0;
+      font-family: "Microsoft JhengHei", Arial, sans-serif;
+      background-color: #fff;
+      color: #333;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* 頁首背景圖區域 */
+    header {
+      background: url("fries.jpg") center/cover no-repeat; /* 換成你的薯條圖片路徑 */
+      color: white;
+      text-align: center;
+      padding: 4rem 1rem;
+      position: relative;
+    }
+
+    /* 半透明遮罩，讓文字更清楚 */
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    header h1 {
+      position: relative;
+      font-size: clamp(2rem, 5vw, 4rem);
+      margin: 0;
+    }
+
+    /* 主內容 */
+    main {
+      text-align: center;
+      padding: 2rem 1rem;
+      flex: 1; /* 撐開讓 footer 吸底 */
+    }
+
+    main p {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      margin-bottom: 1rem;
+      color: #444;
+    }
+
+    main h2 {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      margin: 0;
+      font-weight: bold;
+    }
+
+    /* 頁尾 */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #f2f2f2;
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      color: #555;
+    }
+
+    /* 響應式排版 */
+    @media (max-width: 600px) {
+      header {
+        padding: 3rem 1rem;
+      }
+      main {
+        padding: 1.5rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頁首 -->
+  <header>
+    <h1>薯條倒數計時器</h1>
+  </header>
+
+  <!-- 主內容 -->
+  <main>
+    <p>距離台灣時間 8/26 (二) 16:00 還有</p>
+    <h2 id="timer">酥脆薯條!</h2>
+  </main>
+
+  <!-- 頁尾 -->
+  <footer>
+    By 小雀杏
+  </footer>
+
+  <!-- 倒數計時 JavaScript -->
+  <script>
+    const target = new Date("2025-08-26T16:00:00+08:00").getTime();
+    const timerElement = document.getElementById("timer");
+
+    function updateTimer() {
+      const now = new Date().getTime();
+      const distance = target - now;
+
+      if (distance <= 0) {
+        timerElement.textContent = "薯條起鍋啦！🍟";
+        clearInterval(interval);
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      timerElement.textContent = `${days}天 ${hours}時 ${minutes}分 ${seconds}秒`;
+    }
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+/* 全域設定 */
+body {
+  margin: 0;
+  font-family: "Microsoft JhengHei", Arial, sans-serif;
+  background-color: #fff;
+  color: #333;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;  /* 讓整個頁面至少滿螢幕高 */
+}
+
+/* 頁首背景圖區域 */
+header {
+  background: url("main_pic.jpg") center/cover no-repeat; /* 換成你的薯條圖片路徑 */
+  color: white;
+  text-align: center;
+  padding: 4rem 1rem;
+  position: relative;
+}
+
+/* 半透明遮罩，讓文字更清楚 */
+header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+header h1 {
+  position: relative;
+  font-size: clamp(2rem, 5vw, 4rem); /* 字體會隨裝置大小縮放 */
+  margin: 0;
+  z-index: 1;
+}
+
+/* 浮在 header 上方的導航列 */
+.overlay-nav {
+  position: absolute;
+  bottom: 0; /* 貼在 header 底部 */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.7); /* 半透明白底 */
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  backdrop-filter: blur(6px); /* 毛玻璃效果 */
+  z-index: 2; /* 確保在遮罩上面 */
+}
+
+.overlay-nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  transition: color 0.2s ease;
+}
+
+.overlay-nav a:hover {
+  color: #d35400;
+}
+
+.overlay-nav a.active {
+  color: #000;
+  font-weight: 700;
+  text-decoration: underline;
+  pointer-events: none; /* 不可點擊 */
+}
+
+/* 主區塊 */
+main {
+  text-align: center;
+  padding: 2rem 1rem;
+  flex: 1; /* 撐開，把 footer 推到最下 */
+}
+
+main p {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+main h2 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  margin: 0;
+  font-weight: bold;
+}
+
+/* 活動清單 */
+.event-list {
+  list-style: none;           /* 去掉前面的圓點 */
+  padding: 0;
+  margin: 1rem auto;
+  max-width: 500px;
+}
+
+.event-list li {
+  background: #fff8e1;        /* 淡黃色底，像活動公告感 */
+  margin: 0.5rem 0;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  text-align: center;
+  font-weight: 600;
+}
+
+.event-list li a {
+  display: block;          /* 整個 li 都可點 */
+  color: inherit;          /* 繼承文字顏色 */
+  text-decoration: none;   /* 去掉底線 */
+}
+.event-list li a:hover {
+  text-decoration: underline; /* 滑過才顯示底線，使用者知道可點 */
+}
+
+/* 頁尾 */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: white;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  color: #555;
+}
+
+/* 響應式排版：小螢幕時保持字不換行 */
+@media (max-width: 600px) {
+  header {
+    padding: 3rem 1rem;
+  }
+  main {
+    padding: 1.5rem 1rem;
+  }
+}

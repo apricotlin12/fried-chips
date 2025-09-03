@@ -55,6 +55,11 @@ header h1 {
   font-weight: 600;
   font-size: clamp(0.9rem, 2vw, 1.1rem);
   transition: color 0.2s ease;
+
+  padding: 4px 8px;           /* 統一內距 */
+  border-radius: 6px;         /* 統一圓角 */
+  line-height: 1.4;           /* 穩定對齊 */
+  display: inline-block;      /* 保證可設定尺寸 */
 }
 
 .overlay-nav a:hover {
@@ -66,6 +71,7 @@ header h1 {
   font-weight: 700;
   text-decoration: underline;
   pointer-events: none; /* 不可點擊 */
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 /* 主區塊 */

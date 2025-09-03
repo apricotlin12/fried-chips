@@ -27,7 +27,10 @@
     const links = document.querySelectorAll('#header-placeholder nav a');
     links.forEach(link => {
       const linkPath = link.getAttribute('href');
-      if (linkPath === currentPath || linkPath === "") {
+      if (linkPath === currentPath) {
+        link.classList.add('active');
+      }
+      if (currentPath === "" && linkPath === "index.html") {
         link.classList.add('active');
       }
     });

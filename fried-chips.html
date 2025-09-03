@@ -3,58 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>倒薯計時器</title>
+  <title>OO倒數計時器</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- 頁首 -->
-  <header>
-    <h1>倒薯計時器</h1>
-    <nav class="overlay-nav">
-      <a href="index.html">活動倒數</a>
-      <a href="fried-chips.html" class="active">倒薯計時</a>
-    </nav>
-  </header>
+<!-- 頁首 -->
+<div id="header-placeholder"></div>
+<script>
+  fetch('header.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('header-placeholder').innerHTML = data;
 
-  <!-- 主內容 -->
-  <main>
-    <p>薯條正在補貨中</p>
-    <!-- <p>距離台灣時間 8/26 (二) 16:00 還有</p> -->
-    <!-- <h2 id="timer">酥脆薯條!</h2> -->
-  </main>
-
-  <!-- 頁尾 -->
-  <footer>
-    By 小雀杏
-  </footer>
-
-  <!-- 倒數計時 JavaScript -->
-  <script>
-    const target = new Date("2025-08-26T16:00:00+08:00").getTime();
-    const timerElement = document.getElementById("timer");
-
-    function updateTimer() {
-      const now = new Date().getTime();
-      const distance = target - now;
-
-      if (distance <= 0) {
-        timerElement.textContent = "薯條起鍋啦！🍟";
-        clearInterval(interval);
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      timerElement.textContent = `${days}天 ${hours}時 ${minutes}分 ${seconds}秒`;
+    // 修改 h1
+    const pageTitle = "倒薯計時器";
+    if (typeof pageTitle !== 'undefined') {
+      const h1 = document.querySelector('#header-placeholder h1');
+      if (h1) h1.textContent = pageTitle;
     }
 
-    updateTimer();
-    const interval = setInterval(updateTimer, 1000);
-  </script>
+    // 設定 active class
+    const currentPath = window.location.pathname.split('/').pop(); // 例如 index.html
+    const links = document.querySelectorAll('#header-placeholder nav a');
+    links.forEach(link => {
+      const linkPath = link.getAttribute('href');
+      if (linkPath === currentPath) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+
+<!-- 主內容 -->
+<main>
+  <p>薯條正在補貨中</p>
+  <!-- <p>距離台灣時間 8/26 (二) 16:00 還有</p> -->
+  <!-- <h2 id="timer">酥脆薯條!</h2> -->
+</main>
+
+<!-- 頁尾 -->
+<footer>
+  By 小雀杏
+</footer>
+
+<!-- 倒數計時 JavaScript -->
+<script>
+  const target = new Date("2025-08-26T16:00:00+08:00").getTime();
+  const timerElement = document.getElementById("timer");
+
+  function updateTimer() {
+    const now = new Date().getTime();
+    const distance = target - now;
+
+    if (distance <= 0) {
+      timerElement.textContent = "薯條起鍋啦！🍟";
+      clearInterval(interval);
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    timerElement.textContent = `${days}天 ${hours}時 ${minutes}分 ${seconds}秒`;
+  }
+
+  updateTimer();
+  const interval = setInterval(updateTimer, 1000);
+</script>
 
 </body>
 </html>

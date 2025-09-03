@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OO倒數計時器</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 頁首 -->
+<div id="header-placeholder"></div>
+<script>
+  fetch('header.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('header-placeholder').innerHTML = data;
+
+  // 修改 h1
+    const pageTitle = "自訂倒數計時器";
+    if (typeof pageTitle !== 'undefined') {
+      const h1 = document.querySelector('#header-placeholder h1');
+      if (h1) h1.textContent = pageTitle;
+    }
+
+    // 設定 active class
+    const currentPath = window.location.pathname.split('/').pop(); // 例如 index.html
+    const links = document.querySelectorAll('#header-placeholder nav a');
+    links.forEach(link => {
+      const linkPath = link.getAttribute('href');
+      if (linkPath === currentPath) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+
+<!-- 主內容 -->
+<main>
+<div>
+    <label for="datetime">自訂倒數時間：</label>
+    <input type="datetime-local" id="datetime">
+    <button id="startBtn">開始倒數</button>
+    <button id="clearBtn">清除倒數</button>
+</div>
+<h2 id="timer"></h2>
+</main>
+
+<!-- 頁尾 -->
+<footer>
+By 小雀杏
+</footer>
+
+<script>
+  const input = document.getElementById('datetime');
+  const startBtn = document.getElementById('startBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const timerElement = document.getElementById("timer");
+
+  let timer;
+  const STORAGE_KEY = 'countdownTargetTime';
+
+  function startCountdown(targetTimeStr) {
+    const targetTime = new Date(targetTimeStr).getTime();
+
+    if (isNaN(targetTime)) {
+      timerElement.textContent = '時間格式錯誤';
+      return;
+    }
+
+    clearInterval(timer);
+    timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetTime - now;
+
+      if (distance <= 0) {
+        clearInterval(timer);
+        timerElement.textContent = '倒數結束！';
+        localStorage.removeItem(STORAGE_KEY);
+        return;
+      }
+
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      timerElement.textContent = `剩下 ${hours} 小時 ${minutes} 分 ${seconds} 秒`;
+    }, 1000);
+  }
+
+  // 開始按鈕
+  startBtn.addEventListener('click', () => {
+    const inputValue = input.value;
+    if (inputValue) {
+      localStorage.setItem(STORAGE_KEY, inputValue);
+      startCountdown(inputValue);
+    }
+  });
+
+  // 清除按鈕
+  clearBtn.addEventListener('click', () => {
+    localStorage.removeItem(STORAGE_KEY);
+    clearInterval(timer);
+    countdown.textContent = '倒數已清除';
+  });
+
+  // 初始讀取 localStorage
+  window.addEventListener('load', () => {
+    const savedTime = localStorage.getItem(STORAGE_KEY);
+    if (savedTime) {
+      input.value = savedTime;
+      startCountdown(savedTime);
+    }
+  });
+</script>
+
+</body>
+</html>

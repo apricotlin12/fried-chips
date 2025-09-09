@@ -9,6 +9,47 @@
 <body>
 
 <div id="header-placeholder"></div>
+
+<!-- 主內容 -->
+<main>
+  <h2>本丸大門關閉中</h2>
+  <p>距離活動結束（台灣時間 9/9 (二) 16:00）還有</p>
+  <h2 id="timer">OAO</h2>
+</main>
+
+<!-- 頁尾 -->
+<footer>
+  By 小雀杏
+</footer>
+
+<!-- 倒數計時 JavaScript -->
+<script>
+  // 指定目標時間
+  const target = new Date("2025-09-09T16:00:00+08:00").getTime();
+  const timerElement = document.getElementById("timer");
+
+  function updateTimer() {
+    const now = new Date().getTime();
+    const distance = target - now;
+
+    if (distance <= 0) {
+      timerElement.textContent = "開門祕寶囉！";
+      clearInterval(interval);
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    timerElement.textContent = `${days}天 ${hours}時 ${minutes}分 ${seconds}秒`;
+  }
+
+  updateTimer();
+  const interval = setInterval(updateTimer, 1000);
+</script>
+
 <script>
   fetch('header.html')
     .then(res => res.text())
@@ -16,7 +57,7 @@
       document.getElementById('header-placeholder').innerHTML = data;
 
     // 修改 h1
-    const pageTitle = "活動倒數計時器";
+    const pageTitle = "開門倒數計時器";
     if (typeof pageTitle !== 'undefined') {
       const h1 = document.querySelector('#header-placeholder h1');
       if (h1) h1.textContent = pageTitle;
@@ -35,51 +76,6 @@
       }
     });
   });
-</script>
-
-<!-- 主內容 -->
-<main>
-  <h2>目前活動：</h2>
-  <ul class="event-list">
-    <li><a href="https://x.com/TOUKEN_STAFF/status/1960254749414187204" target="_blank">遠征大成功三倍小判</a></li>
-    <li><a href="https://x.com/TOUKEN_STAFF/status/1960253163916910929" target="_blank">大慶直胤 限時鍛刀</a></li>
-    <li><a href="https://x.com/TOUKEN_STAFF/status/1960251931374592009" target="_blank">夜花奪還作戰 pt 獎勵</a></li>
-  </ul>
-  <p>距離活動結束（台灣時間 9/9 (二) 12:00）還有</p>
-  <h2 id="timer">OAO</h2>
-</main>
-
-<!-- 頁尾 -->
-<footer>
-  By 小雀杏
-</footer>
-
-<!-- 倒數計時 JavaScript -->
-<script>
-  // 指定目標時間
-  const target = new Date("2025-09-09T12:00:00+08:00").getTime();
-  const timerElement = document.getElementById("timer");
-
-  function updateTimer() {
-    const now = new Date().getTime();
-    const distance = target - now;
-
-    if (distance <= 0) {
-      timerElement.textContent = "喔不、活動時間到了😭";
-      clearInterval(interval);
-      return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    timerElement.textContent = `${days}天 ${hours}時 ${minutes}分 ${seconds}秒`;
-  }
-
-  updateTimer();
-  const interval = setInterval(updateTimer, 1000);
 </script>
 
 </body>

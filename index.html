@@ -27,7 +27,7 @@
       height: auto;
     }
 
-    .shake-img:active {
+    .shake {
       animation: shake 0.3s;
     }
 
@@ -41,17 +41,26 @@
     }
   </style>
 
-  <div id="open_times">敲門次數：0</div>
+  <div id="open_times">拍門次數：0</div>
   <img src="main_pic_door.jpg" class="shake-img" alt="開門啊！" id="door_img" />
 
   <script>
     let count = 0;
-    document.getElementById("door_img").addEventListener("click", () => {
+    const img = document.getElementById("door_img");
+    const counter = document.getElementById("open_times");
+
+    img.addEventListener("click", () => {
       count++;
-      document.getElementById("open_times").textContent = `敲門次數：${count}`;
+      counter.textContent = `拍門次數：${count}`;
+
+      // 先移除再加 class，確保動畫會重播
+      img.classList.remove("shake");
+      void img.offsetWidth; // 強制 reflow，重觸發 animation
+      img.classList.add("shake");
     });
   </script>
 </div>
+
 
 
 </main>

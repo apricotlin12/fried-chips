@@ -15,6 +15,39 @@
   <h2>本丸大門關閉中</h2>
   <p>距離大門開啟（台灣時間 9/9 (二) 16:00）還有</p>
   <h2 id="timer">OAO</h2>
+<!-- 拍門區 -->
+<div id="open_the_door">
+  <style>
+    .shake-img {
+      display: inline-block;
+      transition: transform 0.1s;
+      cursor: pointer;
+    }
+    .shake-img:active {
+      animation: shake 0.3s;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0px, 0px) rotate(0deg); }
+      20% { transform: translate(-3px, 0px) rotate(-3deg); }
+      40% { transform: translate(3px, 0px) rotate(3deg); }
+      60% { transform: translate(-3px, 0px) rotate(-3deg); }
+      80% { transform: translate(3px, 0px) rotate(3deg); }
+      100% { transform: translate(0px, 0px) rotate(0deg); }
+    }
+  </style>
+  <div id="open_times">拍門次數：0</div>
+  <img src="main_pic_door.jpg" class="shake-img" alt="開門啊！" id="door_img" />
+
+  <script>
+    let count = 0;
+    document.getElementById("door_img").addEventListener("click", () => {
+      count++;
+      document.getElementById("open_times").textContent = `拍門次數：${count}`;
+    });
+  </script>
+</div>
+
 </main>
 
 <!-- 頁尾 -->

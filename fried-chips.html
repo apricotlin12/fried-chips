@@ -10,30 +10,6 @@
 
 <!-- 頁首 -->
 <div id="header-placeholder"></div>
-<script>
-  fetch('header.html')
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById('header-placeholder').innerHTML = data;
-
-    // 修改 h1
-    const pageTitle = "倒薯計時器";
-    if (typeof pageTitle !== 'undefined') {
-      const h1 = document.querySelector('#header-placeholder h1');
-      if (h1) h1.textContent = pageTitle;
-    }
-
-    // 設定 active class
-    const currentPath = window.location.pathname.split('/').pop(); // 例如 index.html
-    const links = document.querySelectorAll('#header-placeholder nav a');
-    links.forEach(link => {
-      const linkPath = link.getAttribute('href');
-      if (linkPath === currentPath) {
-        link.classList.add('active');
-      }
-    });
-  });
-</script>
 
 <!-- 主內容 -->
 <main>
@@ -42,10 +18,8 @@
   <!-- <h2 id="timer">酥脆薯條!</h2> -->
 </main>
 
-<!-- 頁尾 -->
-<footer>
-  By 小雀杏
-</footer>
+<!-- footer -->
+<div id="footer-placeholder"></div>
 
 <!-- 倒數計時 JavaScript -->
 <script>
@@ -74,5 +48,6 @@
   const interval = setInterval(updateTimer, 1000);
 </script>
 
+<script src="js/import-html.js"></script>
 </body>
 </html>

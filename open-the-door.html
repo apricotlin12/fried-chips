@@ -1,0 +1,44 @@
+<!-- 拍門區 -->
+<div id="open_the_door">
+  <style>
+    .shake-img {
+      display: inline-block;
+      transition: transform 0.1s;
+      cursor: pointer;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .shake {
+      animation: shake 0.3s;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0px, 0px) rotate(0deg); }
+      20% { transform: translate(-2px, 0px) rotate(-2deg); }
+      40% { transform: translate(2px, 0px) rotate(2deg); }
+      60% { transform: translate(-2px, 0px) rotate(-2deg); }
+      80% { transform: translate(2px, 0px) rotate(2deg); }
+      100% { transform: translate(0px, 0px) rotate(0deg); }
+    }
+  </style>
+
+  <div id="open_times">拍門次數：0</div>
+  <img src="img/main_pic_door.jpg" class="shake-img" alt="開門啊！" id="door_img" />
+
+  <script>
+    let count = 0;
+    const img = document.getElementById("door_img");
+    const counter = document.getElementById("open_times");
+
+    img.addEventListener("click", () => {
+      count++;
+      counter.textContent = `拍門次數：${count}`;
+
+      // 先移除再加 class，確保動畫會重播
+      img.classList.remove("shake");
+      void img.offsetWidth; // 強制 reflow，重觸發 animation
+      img.classList.add("shake");
+    });
+  </script>
+</div>

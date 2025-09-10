@@ -12,7 +12,7 @@ body {
 
 /* 頁首背景圖區域 */
 header {
-  background: url("main_pic.jpg") center/cover no-repeat; /* 換成你的薯條圖片路徑 */
+  background: url("img/main_pic.jpg") center/cover no-repeat; /* 換成你的薯條圖片路徑 */
   color: white;
   text-align: center;
   padding: 4rem 1rem;

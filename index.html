@@ -8,6 +8,7 @@
 </head>
 <body>
 
+<!-- header -->
 <div id="header-placeholder"></div>
 
 <!-- 主內容 -->
@@ -18,59 +19,10 @@
   </ul>
   <p>距離活動結束（台灣時間 9/24 (三) 12:00）還有</p>
   <h2 id="timer">OAO</h2>
-
-<!-- 拍門區
-<div id="open_the_door">
-  <style>
-    .shake-img {
-      display: inline-block;
-      transition: transform 0.1s;
-      cursor: pointer;
-      max-width: 100%;
-      height: auto;
-    }
-
-    .shake {
-      animation: shake 0.3s;
-    }
-
-    @keyframes shake {
-      0% { transform: translate(0px, 0px) rotate(0deg); }
-      20% { transform: translate(-2px, 0px) rotate(-2deg); }
-      40% { transform: translate(2px, 0px) rotate(2deg); }
-      60% { transform: translate(-2px, 0px) rotate(-2deg); }
-      80% { transform: translate(2px, 0px) rotate(2deg); }
-      100% { transform: translate(0px, 0px) rotate(0deg); }
-    }
-  </style>
-
-  <div id="open_times">拍門次數：0</div>
-  <img src="main_pic_door.jpg" class="shake-img" alt="開門啊！" id="door_img" />
-
-  <script>
-    let count = 0;
-    const img = document.getElementById("door_img");
-    const counter = document.getElementById("open_times");
-
-    img.addEventListener("click", () => {
-      count++;
-      counter.textContent = `拍門次數：${count}`;
-
-      // 先移除再加 class，確保動畫會重播
-      img.classList.remove("shake");
-      void img.offsetWidth; // 強制 reflow，重觸發 animation
-      img.classList.add("shake");
-    });
-  </script>
-</div>
--->
-
 </main>
 
-<!-- 頁尾 -->
-<footer>
-  By 小雀杏
-</footer>
+<!-- footer -->
+<div id="footer-placeholder"></div>
 
 <!-- 倒數計時 JavaScript -->
 <script>
@@ -100,34 +52,6 @@
   const interval = setInterval(updateTimer, 1000);
 </script>
 
-<!-- 修改標題 & 連結高亮 JavaScript -->
-<script>
-  fetch('header.html')
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById('header-placeholder').innerHTML = data;
-
-    // 修改 h1
-    const pageTitle = "活動倒數計時器";
-    if (typeof pageTitle !== 'undefined') {
-      const h1 = document.querySelector('#header-placeholder h1');
-      if (h1) h1.textContent = pageTitle;
-    }
-
-    // 設定 active class
-    const currentPath = window.location.pathname.split('/').pop(); // 例如 index.html
-    const links = document.querySelectorAll('#header-placeholder nav a');
-    links.forEach(link => {
-      const linkPath = link.getAttribute('href');
-      if (linkPath === currentPath) {
-        link.classList.add('active');
-      }
-      if (currentPath === "" && linkPath === "index.html") {
-        link.classList.add('active');
-      }
-    });
-  });
-</script>
-
+<script src="js/import-html.js"></script>
 </body>
 </html>

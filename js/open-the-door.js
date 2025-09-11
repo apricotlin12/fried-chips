@@ -56,3 +56,8 @@ function initOpenDoor() {
         img.src = "img/main_pic_door.jpg";
     });
 }
+
+if (document.getElementById("door_img")) {
+  // 如果這頁是被直接打開，自己初始化
+  initOpenDoor();
+}

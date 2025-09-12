@@ -13,41 +13,26 @@
 
 <!-- 主內容 -->
 <main>
-  <p>薯條正在補貨中</p>
-  <!-- <p>距離台灣時間 8/26 (二) 16:00 還有</p> -->
-  <!-- <h2 id="timer">酥脆薯條!</h2> -->
+  <h2>薯條口味：</h2>
+  <ul class="event-list">
+    <li><a href="https://x.com/uki_TSC_WEB" target="_blank">鵜飼派空の日WEB企画</a></li>
+  </ul>
+  <p>距離台灣時間 8/26 (二) 16:00 還有</p>
+  <h2 id="timer">酥脆薯條!</h2>
 </main>
 
 <!-- footer -->
 <div id="footer-placeholder"></div>
 
 <!-- 倒數計時 JavaScript -->
+ <script src="js/import-html.js"></script>
+<script src="js/countdown.js"></script>
 <script>
-  const target = new Date("2025-08-26T16:00:00+08:00").getTime();
-  const timerElement = document.getElementById("timer");
-
-  function updateTimer() {
-    const now = new Date().getTime();
-    const distance = target - now;
-
-    if (distance <= 0) {
-      timerElement.textContent = "薯條起鍋啦！🍟";
-      clearInterval(interval);
-      return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    timerElement.textContent = `${days}天 ${hours}時 ${minutes}分 ${seconds}秒`;
-  }
-
-  updateTimer();
-  const interval = setInterval(updateTimer, 1000);
+  startCountdown({
+    targetTime: "2025-09-20T00:00:00+09:00",
+    elementId: "timer",
+    endText: "薯條起鍋啦！🍟"
+  });
 </script>
-
-<script src="js/import-html.js"></script>
 </body>
 </html>

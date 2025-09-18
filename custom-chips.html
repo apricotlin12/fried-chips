@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OO倒數計時器</title>
-  <link rel="stylesheet" href="style.css">
+  <script>
+    fetch("head.html")
+      .then(res => res.text())
+      .then(html => {
+        document.head.innerHTML += html;
+      });
+  </script>
 </head>
 <body>
 

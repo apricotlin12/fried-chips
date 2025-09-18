@@ -1,3 +1,5 @@
+let playSound = true;
+
 function setDoorImage(img, count) {
     switch (true) {
         case count >= 10000:
@@ -12,6 +14,8 @@ function setDoorImage(img, count) {
 }
 
 function playDoorSound(count, woodAudios, bigWoodAudios, ironAudios, extraAudios) {
+    if (!playSound) return; // 控制是否撥放音效
+
     // 機率播放隨機音效，不看次數
     if (extraAudios && extraAudios.length > 0 && Math.random() < 0.05) {
         const randomExtra = extraAudios[Math.floor(Math.random() * extraAudios.length)];
@@ -45,6 +49,7 @@ function initOpenDoor() {
     const img = document.getElementById("door_img");
     const counter = document.getElementById("open_times");
     const resetBtn = document.getElementById("reset_btn");
+    const soundToggle = document.getElementById("sound_toggle");
 
     // 讀取 localStorage
     let count = parseInt(localStorage.getItem("doorCount")) || 0;
@@ -110,6 +115,11 @@ function initOpenDoor() {
 
         counter.textContent = `拍門次數：${count}`;
         setDoorImage(img, count);
+    });
+
+    // 音效開關
+    soundToggle.addEventListener("change", (e) => {
+        playSound = e.target.checked;
     });
 }
 

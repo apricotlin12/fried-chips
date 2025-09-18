@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OO倒數計時器</title>
-  <link rel="stylesheet" href="style.css">
+  <script>
+    fetch("head.html")
+      .then(res => res.text())
+      .then(html => {
+        document.head.innerHTML += html;
+      });
+  </script>
 </head>
 <body>
 
@@ -35,15 +38,15 @@
   });
 </script>
 
-<script>
+<!--<script>
   // 讀取 open-the-door.html
-  /*fetch('open-the-door.html')
+  fetch('open-the-door.html')
     .then(res => res.text())
     .then(data => {
       document.getElementById('open-door-placeholder').innerHTML = data;
       initOpenDoor();
-    });*/
-</script>
+    });
+</script> -->
 <script src="js/open-the-door.js"></script>
 </body>
 </html>

@@ -16,10 +16,13 @@
 
 <!-- 主內容 -->
 <main>
-  <h2>目前活動：</h2>
-  <ul class="event-list">
-    <li><a href="https://x.com/TOUKEN_STAFF/status/1965325964969476495" target="_blank">秘宝の里 ～花集めの段～</a></li>
-  </ul>
+  <div class="now-event">
+    <h3>目前活動：</h3>
+    <div class="list-group">
+      <a href="https://x.com/TOUKEN_STAFF/status/1965325964969476495" target="_blank" class="list-group-item list-group-item-action list-group-item-warning">秘宝の里 ～花集めの段～</a>
+    </div>
+  </div>
+  </br>
   <p>距離活動結束（台灣時間 9/24 (三) 12:00）還有</p>
   <h2 id="timer">OAO</h2>
   <div id="open-door-placeholder"></div>
@@ -31,22 +34,66 @@
 <script src="js/import-html.js"></script>
 <script src="js/countdown.js"></script>
 <script>
+  const ACTIVITY_END_TIME = "2025-09-24T12:00:00+08:00";
+  const OPEN_DOOR_TIME = "2025-09-24T15:00:00+08:00";
+
   startCountdown({
-    targetTime: "2025-09-24T12:00:00+08:00",
+    targetTime: ACTIVITY_END_TIME,
     elementId: "timer",
     endText: "拿到小小江了嗎？"
   });
-</script>
 
-<!--<script>
-  // 讀取 open-the-door.html
-  fetch('open-the-door.html')
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById('open-door-placeholder').innerHTML = data;
-      initOpenDoor();
-    });
-</script> -->
+  const targetTime = new Date(ACTIVITY_END_TIME).getTime();
+  const soundTime = new Date(OPEN_DOOR_TIME).getTime();
+  let soundPlayed = false;
+
+  function getCheckInterval(targetTimestamp) {
+    const now = Date.now();
+    const diff = targetTimestamp - now;
+    if (diff > 30 * 60 * 1000) {
+      return 5 * 60 * 1000; // 5分鐘
+    } else if (diff > 2 * 60 * 1000) {
+      return 60 * 1000; // 1分鐘
+    } else {
+      return 1000; // 1秒
+    }
+  }
+
+  // 處理 open-the-door.html 的載入
+  function handleOpenDoorHtml() {
+    const now = Date.now();
+    if (now >= targetTime && now < soundTime) {
+      document.getElementById('open-door-placeholder').style.display = '';
+      const audio = new Audio("sound/關門.mp3");
+      audio.play();
+      fetch('open-the-door.html')
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById('open-door-placeholder').innerHTML = data;
+          if (typeof initOpenDoor === 'function') initOpenDoor();
+        });
+    } else {
+      setTimeout(handleOpenDoorHtml, getCheckInterval(targetTime));
+    }
+  }
+
+  // 處理音效播放與隱藏
+  function handleOpenDoorSound() {
+    const now = Date.now();
+    if (now >= soundTime && !soundPlayed) {
+      soundPlayed = true;
+      document.getElementById('open-door-placeholder').style.display = 'none';
+      document.getElementById('timer').textContent = "開門啦！";
+      const audio = new Audio("sound/開門.mp3");
+      audio.play();
+    } else if (!soundPlayed) {
+      setTimeout(handleOpenDoorSound, getCheckInterval(soundTime));
+    }
+  }
+
+  handleOpenDoorHtml();
+  handleOpenDoorSound();
+</script>
 <script src="js/open-the-door.js"></script>
 </body>
 </html>

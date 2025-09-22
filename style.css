@@ -78,7 +78,7 @@ header h1 {
 main {
   text-align: center;
   padding: 2rem 1rem;
-  flex: 1; /* 撐開，把 footer 推到最下 */
+  flex: 1;
 }
 
 main p {
@@ -93,32 +93,13 @@ main h2 {
   font-weight: bold;
 }
 
-/* 活動清單 */
-.event-list {
-  list-style: none;           /* 去掉前面的圓點 */
-  padding: 0;
-  margin: 1rem auto;
-  max-width: 500px;
+.now-event {
+  width: 50%;
+  margin: 0 auto;
 }
 
-.event-list li {
-  background: #fff8e1;        /* 淡黃色底，像活動公告感 */
-  margin: 0.5rem 0;
-  padding: 0.8rem 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  text-align: center;
-  font-weight: 600;
-}
-
-.event-list li a {
-  display: block;          /* 整個 li 都可點 */
-  color: inherit;          /* 繼承文字顏色 */
-  text-decoration: none;   /* 去掉底線 */
-}
-.event-list li a:hover {
-  text-decoration: underline; /* 滑過才顯示底線，使用者知道可點 */
+.list-group {
+  font-size: x-large;
 }
 
 /* 頁尾 */

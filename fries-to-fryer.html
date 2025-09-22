@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>🍟跌落樓梯動畫</title>
+  <style>
+    body {
+      background: #f0f0f0;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .stair {
+      position: absolute;
+      width: 120px;
+      height: 20px;
+      background-color: #999;
+    }
+
+    .fries {
+      position: absolute;
+      font-size: 2.5rem;
+      animation: fall 2.5s ease-in-out infinite;
+      left: 80px;
+    }
+
+    @keyframes fall {
+      0%   { transform: translate(0px, 0px) rotate(0deg); }
+      10%  { transform: translate(40px, 40px) rotate(-20deg); }
+      20%  { transform: translate(80px, 80px) rotate(15deg); }
+      30%  { transform: translate(120px, 120px) rotate(-10deg); }
+      40%  { transform: translate(160px, 160px) rotate(10deg); }
+      50%  { transform: translate(200px, 200px) rotate(-8deg); }
+      60%  { transform: translate(240px, 240px) rotate(5deg); }
+      70%  { transform: translate(280px, 280px) rotate(-5deg); }
+      80%  { transform: translate(320px, 320px) rotate(3deg); }
+      90%  { transform: translate(360px, 360px) rotate(-3deg); }
+      100% { transform: translate(400px, 400px) rotate(0deg); }
+    }
+
+    .bottom-img {
+        position: absolute;
+        width: 400px; /* 自訂大小 */
+        left: 250px;  /* 根據最後薯條落點位置微調 */
+        top: 380px;   /* 放在樓梯最底下再下一點 */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 樓梯 -->
+    <script>
+      const container = document.querySelector('.container');
+      const stairCount = 10;
+      for (let i = 0; i < stairCount; i++) {
+        const stair = document.createElement('div');
+        stair.classList.add('stair');
+        stair.style.left = `${i * 40}px`;
+        stair.style.top = `${i * 40}px`;
+        container.appendChild(stair);
+      }
+    </script>
+
+    <!-- 薯條 -->
+    <div class="fries">🍟</div>
+    <img class="bottom-img" src="img/fryer.jpg" alt="油鍋">
+  </div>
+</body>
+</html>

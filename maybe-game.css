@@ -1,0 +1,104 @@
+.material-count {
+  margin-right: 16px;
+}
+
+.worker-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.worker-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.worker-needs {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 4px;
+}
+
+.floating-tip {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fffae0;
+  color: #333;
+  padding: 10px 24px;
+  border: 1px solid #e0c800;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  z-index: 9999;
+  font-size: 1.1em;
+  display: none;
+}
+
+/* 材料、工人、物品區塊樣式 */
+.materials, .workers, .items {
+  margin: 16px 0;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.material, .worker {
+  display: inline-block;
+  margin: 8px;
+  padding: 12px 24px;
+  background: #f0f0f0;
+  border-radius: 6px;
+  font-weight: bold;
+}
+.items {
+  background: #e8ffe8;
+  min-height: 40px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  padding: 12px;
+}
+.item {
+  background: #fff;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+.material-count {
+  margin-right: 16px;
+}
+.worker-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 16px;
+}
+.worker-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.worker-needs {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 4px;
+}
+.floating-tip {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fffae0;
+  color: #333;
+  padding: 10px 24px;
+  border: 1px solid #e0c800;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  z-index: 9999;
+  font-size: 1.1em;
+  display: none;
+}

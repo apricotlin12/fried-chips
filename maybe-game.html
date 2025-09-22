@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>可能是遊戲</title>
+  <link rel="stylesheet" href="maybe-game.css">
+</head>
+<body>
+  <div class="materials" style="display: flex; align-items: center; gap: 16px;"></div>
+  <div class="workers" style="display: flex; align-items: flex-start; gap: 16px;"></div>
+  <div class="items" id="items"></div>
+
+<!-- 測試區 start -->
+  <button id="test_btn_100">+100</button>
+  <button id="test_btn_1000">+1000</button>
+  <script>
+    document.getElementById("test_btn_100").addEventListener("click", function() {
+      ['countA', 'countB', 'countC', 'countD'].forEach(id => {
+        const matDiv = document.getElementById(id);
+        let matCount = parseInt(matDiv.textContent, 10) || 0;
+        matDiv.textContent = matCount + 100;
+      });
+    });
+
+    document.getElementById("test_btn_1000").addEventListener("click", function() {
+      ['countA', 'countB', 'countC', 'countD'].forEach(id => {
+        const matDiv = document.getElementById(id);
+        let matCount = parseInt(matDiv.textContent, 10) || 0;
+        matDiv.textContent = matCount + 1000;
+      });
+    });
+  </script>
+<!-- 測試區 end -->
+
+  <script src="js/maybe-game.js"></script>
+</body>
+</html>

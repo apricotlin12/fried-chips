@@ -24,7 +24,7 @@
   </div>
   </br>
   <p>距離開門（台灣時間 9/24 (三) 15:00）還有</p>
-  <h2 id="timer">OAO</h2>
+  <h2 id="timer"></h2>
   <div id="open-door-placeholder"></div>
 </main>
 
@@ -37,11 +37,7 @@
   const ACTIVITY_END_TIME = "2025-09-24T12:00:00+08:00";
   const OPEN_DOOR_TIME = "2025-09-24T15:00:00+08:00";
 
-  startCountdown({
-    targetTime: ACTIVITY_END_TIME,
-    elementId: "timer",
-    endText: "拿到小小江了嗎？"
-  });
+
 
   const targetTime = new Date(ACTIVITY_END_TIME).getTime();
   const soundTime = new Date(OPEN_DOOR_TIME).getTime();

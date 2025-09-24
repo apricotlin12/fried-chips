@@ -2,13 +2,14 @@ function startCountdown({ targetTime, elementId, endText }) {
   const target = new Date(targetTime).getTime();
   const timerElement = document.getElementById(elementId);
 
+  let interval = null;
   function updateTimer() {
     const now = new Date().getTime();
     const distance = target - now;
 
     if (distance <= 0) {
       timerElement.textContent = endText;
-      clearInterval(interval);
+      if (interval !== null) clearInterval(interval);
       return;
     }
 
@@ -20,7 +21,7 @@ function startCountdown({ targetTime, elementId, endText }) {
     timerElement.textContent = `${days}天 ${hours}時 ${minutes}分 ${seconds}秒`;
   }
 
+  interval = setInterval(updateTimer, 1000);
   updateTimer();
-  const interval = setInterval(updateTimer, 1000);
   return interval; // 回傳 interval id
 }

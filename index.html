@@ -34,10 +34,14 @@
 <script src="js/import-html.js"></script>
 <script src="js/countdown.js"></script>
 <script>
-  const ACTIVITY_END_TIME = "2025-09-24T12:00:00+08:00";
+  const ACTIVITY_END_TIME = "2025-09-24T15:00:00+08:00";
   const OPEN_DOOR_TIME = "2025-09-24T15:00:00+08:00";
 
-
+  startCountdown({
+    targetTime: ACTIVITY_END_TIME,
+    elementId: "timer",
+    endText: "開門了！"
+  });
 
   const targetTime = new Date(ACTIVITY_END_TIME).getTime();
   const soundTime = new Date(OPEN_DOOR_TIME).getTime();
@@ -54,23 +58,16 @@
       return 1000; // 1秒
     }
   }
-
+  document.getElementById('open-door-placeholder').style.display = '';
+  fetch('open-the-door.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('open-door-placeholder').innerHTML = data;
+      if (typeof initOpenDoor === 'function') initOpenDoor();
+    });
   // 處理 open-the-door.html 的載入
   function handleOpenDoorHtml() {
-    const now = Date.now();
-    if (now >= targetTime && now < soundTime) {
-      document.getElementById('open-door-placeholder').style.display = '';
-      const audio = new Audio("sound/關門.mp3");
-      audio.play();
-      fetch('open-the-door.html')
-        .then(res => res.text())
-        .then(data => {
-          document.getElementById('open-door-placeholder').innerHTML = data;
-          if (typeof initOpenDoor === 'function') initOpenDoor();
-        });
-    } else {
-      setTimeout(handleOpenDoorHtml, getCheckInterval(targetTime));
-    }
+
   }
 
   // 處理音效播放與隱藏

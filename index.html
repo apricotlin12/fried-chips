@@ -35,7 +35,7 @@
 <script src="js/countdown.js"></script>
 <script>
   const ACTIVITY_END_TIME = "2025-09-30T12:00:00+08:00";
-  const OPEN_DOOR_TIME = "2025-09-24T16:00:00+08:00";
+  const OPEN_DOOR_TIME = "2025-09-30T15:00:00+08:00";
 
   startCountdown({
     targetTime: ACTIVITY_END_TIME,
@@ -47,6 +47,14 @@
   const soundTime = new Date(OPEN_DOOR_TIME).getTime();
   let soundPlayed = false;
 
+  /**
+   * 根據距離目標時間，決定下次檢查的間隔
+   * - 距離目標時間 > 30 分鐘：每 5 分鐘檢查一次
+   * - 距離目標時間 > 2 分鐘且 <= 30 分鐘：每分鐘檢查一次
+   * - 距離目標時間 <= 2 分鐘：每秒檢查一次
+   * @param {number} targetTimestamp 目標時間的 timestamp
+   * @returns {number} 毫秒間隔
+   */
   function getCheckInterval(targetTimestamp) {
     const now = Date.now();
     const diff = targetTimestamp - now;
@@ -58,16 +66,23 @@
       return 1000; // 1秒
     }
   }
-  document.getElementById('open-door-placeholder').style.display = '';
-  fetch('open-the-door.html')
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById('open-door-placeholder').innerHTML = data;
-      if (typeof initOpenDoor === 'function') initOpenDoor();
-    });
+
   // 處理 open-the-door.html 的載入
   function handleOpenDoorHtml() {
-
+    const now = Date.now();
+    if (now >= targetTime && now < soundTime) {
+      document.getElementById('open-door-placeholder').style.display = '';
+      const audio = new Audio("sound/關門.mp3");
+      audio.play();
+      fetch('open-the-door.html')
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById('open-door-placeholder').innerHTML = data;
+          if (typeof initOpenDoor === 'function') initOpenDoor();
+        });
+    } else {
+      setTimeout(handleOpenDoorHtml, getCheckInterval(targetTime));
+    }
   }
 
   // 處理音效播放與隱藏
@@ -84,6 +99,30 @@
     }
   }
 
+  // 強制載入 open-the-door.html (備用)
+  function forceLoadOpenDoorHtml() {
+    const placeholder = document.getElementById('open-door-placeholder');
+    placeholder.style.display = '';
+    fetch('open-the-door.html')
+      .then(res => res.text())
+      .then(data => {
+        placeholder.innerHTML = data;
+        if (typeof initOpenDoor === 'function') initOpenDoor();
+      });
+  }
+
+  // ACTIVITY_END_TIME 時間到了以後，修改活動倒數標籤內容
+  function updateEndText() {
+    const now = Date.now();
+    if (now >= targetTime) {
+      const pTag = document.querySelector('main p');
+      if (pTag) pTag.textContent = "距離開門（台灣時間 9/30 (二) 15:00）還有";
+    } else {
+      setTimeout(updateEndText, getCheckInterval(targetTime));
+    }
+  }
+
+  updateEndText();
   handleOpenDoorHtml();
   handleOpenDoorSound();
 </script>

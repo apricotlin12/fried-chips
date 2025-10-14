@@ -16,14 +16,15 @@
 
 <!-- 主內容 -->
 <main>
-  <div class="now-event">
+  <!-- 懶得弄活動連結，先註解
+    <div class="now-event">
     <h3>目前活動：</h3>
     <div class="list-group">
       <a href="https://x.com/TOUKEN_STAFF/status/1970762055230857729" target="_blank" class="list-group-item list-group-item-action list-group-item-warning">ドロップ率2倍</a>
     </div>
-  </div>
+  </div> -->
   </br>
-  <p>距離養肝周結束（台灣時間 9/30 (二) 12:00）還有</p>
+  <p>距離大阪城結束（台灣時間 10/14 (二) 12:00）還有</p>
   <h2 id="timer"></h2>
   <div id="open-door-placeholder"></div>
   </br>
@@ -38,14 +39,25 @@
 <script src="js/import-html.js"></script>
 <script src="js/countdown.js"></script>
 <script>
-  const ACTIVITY_END_TIME = "2025-09-30T12:00:00+08:00";
-  const OPEN_DOOR_TIME = "2025-09-30T15:00:00+08:00";
+  const ACTIVITY_END_TIME = "2025-10-14T12:00:00+08:00";
+  const OPEN_DOOR_TIME = "2025-10-14T16:00:00+08:00";
+  const currentTime = Date.now();
 
-  startCountdown({
-    targetTime: OPEN_DOOR_TIME,
-    elementId: "timer",
-    endText: "開門啦！"
-  });
+  // 如果現在已經過了活動結束時間，就換倒數開門
+  if (currentTime >= ACTIVITY_END_TIME) {
+    startCountdown({
+      targetTime: OPEN_DOOR_TIME,
+      elementId: "timer",
+      endText: "開門啦！"
+    });
+  }
+  else {
+    startCountdown({
+      targetTime: ACTIVITY_END_TIME,
+      elementId: "timer",
+      endText: "關門啦！"
+    });
+  }
 
   const targetTime = new Date(ACTIVITY_END_TIME).getTime();
   const soundTime = new Date(OPEN_DOOR_TIME).getTime();

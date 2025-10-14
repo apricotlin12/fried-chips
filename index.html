@@ -44,7 +44,8 @@
   const currentTime = Date.now();
 
   // 如果現在已經過了活動結束時間，就換倒數開門
-  if (currentTime >= ACTIVITY_END_TIME) {
+  const activityEndTimestamp = new Date(ACTIVITY_END_TIME).getTime();
+  if (currentTime >= activityEndTimestamp) {
     startCountdown({
       targetTime: OPEN_DOOR_TIME,
       elementId: "timer",
@@ -132,7 +133,7 @@
     const now = Date.now();
     if (now >= targetTime) {
       const pTag = document.querySelector('main p');
-      if (pTag) pTag.textContent = "距離開門（台灣時間 9/30 (二) 15:00）還有";
+      if (pTag) pTag.textContent = "距離開門（台灣時間 10/14 (二) 16:00）還有";
     } else {
       setTimeout(updateEndText, getCheckInterval(targetTime));
     }

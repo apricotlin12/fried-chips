@@ -133,7 +133,7 @@
     const now = Date.now();
     if (now >= targetTime) {
       const pTag = document.querySelector('main p');
-      if (pTag) pTag.textContent = "距離開門（台灣時間 10/14 (二) 16:00）還有";
+      if (pTag) pTag.textContent = "距離開門（台灣時間 10/21 (二) 15:00）還有";
     } else {
       setTimeout(updateEndText, getCheckInterval(targetTime));
     }

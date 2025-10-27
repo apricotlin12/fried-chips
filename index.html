@@ -16,15 +16,14 @@
 
 <!-- 主內容 -->
 <main>
-  <!-- 懶得弄活動連結，先註解
-    <div class="now-event">
-    <h3>目前活動：</h3>
+  <div class="now-event">
+    <h4>相關連結：</h4>
     <div class="list-group">
-      <a href="https://x.com/TOUKEN_STAFF/status/1970762055230857729" target="_blank" class="list-group-item list-group-item-action list-group-item-warning">ドロップ率2倍</a>
+      <a href="https://x.com/TOUKEN_STAFF" target="_blank" class="list-group-item list-group-item-action list-group-item-warning">刀剣乱舞ONLINE【運営】</a>
     </div>
-  </div> -->
+  </div>
   </br>
-  <p>距離（台灣時間 10/21 (二) 12:00）還有</p>
+  <p>距離（台灣時間 yy/dd () HH:MM）還有</p>
   <h2 id="timer"></h2>
   <div id="open-door-placeholder"></div>
   </br>
@@ -39,29 +38,70 @@
 <script src="js/import-html.js"></script>
 <script src="js/countdown.js"></script>
 <script>
-  const ACTIVITY_END_TIME = "2025-10-21T12:00:00+08:00";
-  const OPEN_DOOR_TIME = "2025-10-21T15:00:00+08:00";
+  const TIMES = {
+    ACTIVITY_END: "2025-10-28T12:00:00+08:00",
+    OPEN_DOOR: "2025-10-28T15:00:00+08:00"
+  };
   const currentTime = Date.now();
 
+  // 將 ISO 時間格式化成頁面上顯示的台灣時間標籤，例如：台灣時間 10/21 (二) 12:00
+  function formatTaiwanLabel(iso) {
+    const d = new Date(iso);
+    const tz = 'Asia/Taipei';
+    const parts = new Intl.DateTimeFormat('zh-Hant', {
+      timeZone: tz,
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+      weekday: 'short'
+    }).formatToParts(d).reduce((acc, p) => { acc[p.type] = p.value; return acc; }, {});
+    // 將「星期二」或「週二」之類轉成單字（例：二）
+    const weekdayMap = {
+      '星期一': '一',
+      '星期二': '二',
+      '星期三': '三',
+      '星期四': '四',
+      '星期五': '五',
+      '星期六': '六',
+      '星期日': '日',
+      '週一': '一',
+      '週二': '二',
+      '週三': '三',
+      '週四': '四',
+      '週五': '五',
+      '週六': '六',
+      '週日': '日'
+    };
+    const w = weekdayMap[parts.weekday] || (parts.weekday ? parts.weekday.replace(/星期|週/, '') : '');
+    return `台灣時間 ${parts.month}/${parts.day} (${w}) ${parts.hour}:${parts.minute}`;
+  }
+
+  // 初始化 main p 的顯示（原本是硬編碼的時間）
+  const pTag = document.querySelector('main p');
+  if (pTag) pTag.textContent = `距離（${formatTaiwanLabel(TIMES.ACTIVITY_END)}）還有`;
+
+  const activityEndTimestamp = new Date(TIMES.ACTIVITY_END).getTime();
+  const openDoorTimestamp = new Date(TIMES.OPEN_DOOR).getTime();
+
   // 如果現在已經過了活動結束時間，就換倒數開門
-  const activityEndTimestamp = new Date(ACTIVITY_END_TIME).getTime();
   if (currentTime >= activityEndTimestamp) {
     startCountdown({
-      targetTime: OPEN_DOOR_TIME,
+      targetTime: TIMES.OPEN_DOOR,
       elementId: "timer",
       endText: "開門啦！"
     });
-  }
-  else {
+  } else {
     startCountdown({
-      targetTime: ACTIVITY_END_TIME,
+      targetTime: TIMES.ACTIVITY_END,
       elementId: "timer",
       endText: "關門啦！"
     });
   }
 
-  const targetTime = new Date(ACTIVITY_END_TIME).getTime();
-  const soundTime = new Date(OPEN_DOOR_TIME).getTime();
+  const targetTime = activityEndTimestamp;
+  const soundTime = openDoorTimestamp;
   let soundPlayed = false;
 
   /**
@@ -89,7 +129,7 @@
     const now = Date.now();
     if (now >= targetTime && now < soundTime) {
       document.getElementById('open-door-placeholder').style.display = '';
-      const audio = new Audio("sound/關門.mp3");
+      const audio = new Audio("sound/可是瑞凡_我回不去了.mp3");
       audio.play();
       fetch('open-the-door.html')
         .then(res => res.text())
@@ -109,7 +149,7 @@
       soundPlayed = true;
       document.getElementById('open-door-placeholder').style.display = 'none';
       document.getElementById('timer').textContent = "開門啦！";
-      const audio = new Audio("sound/開門.mp3");
+      const audio = new Audio("sound/全家便利商店_舊版.mp3");
       audio.play();
     } else if (!soundPlayed) {
       setTimeout(handleOpenDoorSound, getCheckInterval(soundTime));
@@ -133,7 +173,7 @@
     const now = Date.now();
     if (now >= targetTime) {
       const pTag = document.querySelector('main p');
-      if (pTag) pTag.textContent = "距離開門（台灣時間 10/21 (二) 15:00）還有";
+      if (pTag) pTag.textContent = `距離開門（${formatTaiwanLabel(TIMES.OPEN_DOOR)}）還有`;
     } else {
       setTimeout(updateEndText, getCheckInterval(targetTime));
     }

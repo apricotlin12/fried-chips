@@ -21,10 +21,26 @@
       80% { transform: translate(2px, 0px) rotate(2deg); }
       100% { transform: translate(0px, 0px) rotate(0deg); }
     }
+
+    .door-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    #door_character {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      pointer-events: none;
+      z-index: 10;
+    }
   </style>
 
   <div id="open_times">拍門次數：0</div>
-  <img src="img/doors/door_0.jpg" class="shake-img" alt="開門啊！" id="door_img" />
+  <div class="door-container">
+    <img src="img/characters/43_normal_head.png" id="door_character" style="display: none;" />
+    <img src="img/doors/door_0.jpg" class="shake-img" alt="開門啊！" id="door_img" />
+  </div>
   <br />
   <button id="reset_btn" class="btn btn-outline-primary" style="margin-top: 8px;">重置拍門次數</button>
   <div class="form-check form-switch" style="display: flex; justify-content: center; align-items: center; margin-top: 8px;">

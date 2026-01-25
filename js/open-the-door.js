@@ -20,6 +20,7 @@ let lastDoorId = -1;
 function setDoorImage(img, count) {
     const defaultDoor = doorStages.find(door => door.id === 0);
     const availableDoors = doorStages.filter(door => door.id > 0);
+    let characterImg = document.getElementById("door_character");
 
     if (availableDoors.length === 0) {
         console.error("沒有可用的門資料");
@@ -52,6 +53,18 @@ function setDoorImage(img, count) {
     const randomDoor = selectableDoors[Math.floor(Math.random() * selectableDoors.length)];
     img.src = randomDoor.image;
     lastDoorId = randomDoor.id;
+
+    // 以 0.01 的機率顯示角色頭像在右下角（如果現在有顯示就隱藏，沒顯示才可能出現）
+    if (characterImg.style.display === "block") {
+        // 現在有顯示，就隱藏
+        characterImg.style.display = "none";
+    } else if (Math.random() < 0.001) {
+        // 現在沒顯示，有 0.001 的機率顯示
+        characterImg.style.display = "block";
+    } else {
+        // 現在沒顯示，這次也沒有符合機率，保持隱藏
+        characterImg.style.display = "none";
+    }
 }
 
 /**
@@ -142,7 +155,7 @@ async function initOpenDoor() {
         counter.textContent = `拍門次數：${count}`;
 
         // 每拍 100 次就換一扇門
-        if (count % 10 === 0) {
+        if (count % 100 === 0) {
             setDoorImage(img);
         }
 

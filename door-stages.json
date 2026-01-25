@@ -1,0 +1,116 @@
+{
+  "stages": [
+    {
+      "id": 0,
+      "threshold": 0,
+      "image": "img/doors/door_0.jpg",
+      "soundLevel": "wood",
+      "description": "鎮樓門"
+    },
+    {
+      "id": 1,
+      "threshold": 100,
+      "image": "img/doors/door_1.jpg",
+      "soundLevel": "iron",
+      "description": "鐵捲門"
+    },
+    {
+      "id": 2,
+      "threshold": 100,
+      "image": "img/doors/door_2.jpg",
+      "soundLevel": "iron",
+      "description": "銀行金庫門"
+    },
+    {
+      "id": 3,
+      "threshold": 100,
+      "image": "img/doors/door_3.jpg",
+      "soundLevel": "iron",
+      "description": "船艙門"
+    },
+    {
+      "id": 4,
+      "threshold": 100,
+      "image": "img/doors/door_4.jpg",
+      "soundLevel": "iron",
+      "description": "冷凍庫門"
+    },
+    {
+      "id": 5,
+      "threshold": 100,
+      "image": "img/doors/door_5.jpg",
+      "soundLevel": "iron",
+      "description": "無塵室門"
+    },
+    {
+      "id": 6,
+      "threshold": 100,
+      "image": "img/doors/door_6.jpg",
+      "soundLevel": "iron",
+      "description": "西部牛仔門"
+    },
+    {
+      "id": 7,
+      "threshold": 100,
+      "image": "img/doors/door_7.jpg",
+      "soundLevel": "iron",
+      "description": "日本教室門(有水桶)"
+    },
+    {
+      "id": 8,
+      "threshold": 100,
+      "image": "img/doors/door_8.jpg",
+      "soundLevel": "iron",
+      "description": "歐式庭園門"
+    },
+    {
+      "id": 9,
+      "threshold": 100,
+      "image": "img/doors/door_9.jpg",
+      "soundLevel": "iron",
+      "description": "日式拉門"
+    },
+    {
+      "id": 10,
+      "threshold": 100,
+      "image": "img/doors/door_10.jpg",
+      "soundLevel": "iron",
+      "description": "大浴場門"
+    },
+    {
+      "id": 11,
+      "threshold": 100,
+      "image": "img/doors/door_11.jpg",
+      "soundLevel": "iron",
+      "description": "浴室門"
+    },
+    {
+      "id": 12,
+      "threshold": 100,
+      "image": "img/doors/door_12.jpg",
+      "soundLevel": "iron",
+      "description": "手術室門"
+    },
+    {
+      "id": 13,
+      "threshold": 100,
+      "image": "img/doors/door_13.jpg",
+      "soundLevel": "iron",
+      "description": "711門"
+    },
+    {
+      "id": 14,
+      "threshold": 100,
+      "image": "img/doors/door_14.jpg",
+      "soundLevel": "iron",
+      "description": "全家門"
+    },
+    {
+      "id": 15,
+      "threshold": 100,
+      "image": "img/doors/door_15.jpg",
+      "soundLevel": "iron",
+      "description": "萊爾富門"
+    }
+  ]
+}

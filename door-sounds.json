@@ -1,0 +1,19 @@
+{
+  "wood": [
+    "sound/敲木門.mp3",
+    "sound/敲木門(大回音).mp3"
+  ],
+  "bigWood": [
+    "sound/拍木門.mp3",
+    "sound/拍木門(回音).mp3"
+  ],
+  "iron": [
+    "sound/敲鐵門.mp3",
+    "sound/敲鐵門1.mp3",
+    "sound/拍鐵門.mp3"
+  ],
+  "extra": [
+    "sound/快樂敲門.mp3",
+    "sound/皇后娘娘.mp3"
+  ]
+}

@@ -81,7 +81,7 @@ function playDoorSound(count, soundConfig) {
     if (!playSound) return; // 若被關閉則不播放任何音效
 
     // 有額外音效時，以 5% 機率播放其中一個（當作彩蛋）
-    if (soundConfig.extra && soundConfig.extra.length > 0 && Math.random() < 0.05) {
+    if (soundConfig.extra && soundConfig.extra.length > 0 && Math.random() < 0.005) {
         const randomPath = soundConfig.extra[Math.floor(Math.random() * soundConfig.extra.length)];
         const audio = new Audio(randomPath);
         audio.play();

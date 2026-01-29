@@ -11,6 +11,8 @@ fetch('header.html')
     pageTitle = "倒薯計時器";
   } else if (fileName === "custom-chips.html") {
     pageTitle = "自訂倒數計時器";
+  } else if (fileName === "open-door-game.html") {
+    pageTitle = "線上拍門";
   } // 可依需求繼續加
 
   const h1 = document.querySelector('#header-placeholder h1');

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <script>
+    fetch("head.html")
+      .then(res => res.text())
+      .then(html => {
+        document.head.innerHTML += html;
+      });
+  </script>
+</head>
+<body>
+
+<!-- 頁首 -->
+<div id="header-placeholder"></div>
+
+<!-- 主內容 -->
+<main>
+  <div class="now-event">
+    <h3>碰碰碰碰！</h3>
+    <div class="list-group">
+      <!-- <a href="https://x.com/uki_TSC_WEB" class="list-group-item list-group-item-action list-group-item-warning" target="_blank">鵜飼派空の日WEB企画</a> -->
+    </div>
+  </div>
+  </br>
+  <!-- <p>距離台灣時間 9/20 (六) 00:00 還有</p> -->
+  <!-- <h2 id="timer">薯條補貨中</h2> -->
+  <div id="open-door-placeholder"></div>
+</main>
+
+<!-- footer -->
+<div id="footer-placeholder"></div>
+
+<!-- 倒數計時 JavaScript -->
+<script src="js/import-html.js"></script>
+<script src="js/open-the-door.js"></script>
+<script>
+  const placeholder = document.getElementById('open-door-placeholder');
+  placeholder.style.display = '';
+  fetch('open-the-door.html')
+    .then(res => res.text())
+    .then(data => {
+      placeholder.innerHTML = data;
+      if (typeof initOpenDoor === 'function') initOpenDoor();
+    });
+</script>
+</body>
+</html>

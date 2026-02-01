@@ -111,6 +111,104 @@
       "image": "img/doors/door_15.jpg",
       "soundLevel": "iron",
       "description": "萊爾富門"
+    },
+    {
+      "id": 16,
+      "threshold": 100,
+      "image": "img/doors/door_16.jpg",
+      "soundLevel": "iron",
+      "description": "露比門2"
+    },
+    {
+      "id": 17,
+      "threshold": 100,
+      "image": "img/doors/door_17.jpg",
+      "soundLevel": "iron",
+      "description": "景仁宮門"
+    },
+    {
+      "id": 18,
+      "threshold": 100,
+      "image": "img/doors/door_18.jpg",
+      "soundLevel": "iron",
+      "description": "雙開冰箱門"
+    },
+    {
+      "id": 19,
+      "threshold": 100,
+      "image": "img/doors/door_19.jpg",
+      "soundLevel": "iron",
+      "description": "普通門"
+    },
+    {
+      "id": 20,
+      "threshold": 100,
+      "image": "img/doors/door_20.jpg",
+      "soundLevel": "iron",
+      "description": "日式傳統建築玄關"
+    },
+    {
+      "id": 21,
+      "threshold": 100,
+      "image": "img/doors/door_21.jpg",
+      "soundLevel": "iron",
+      "description": "日式庭院的玉鋼走道"
+    },
+    {
+      "id": 22,
+      "threshold": 100,
+      "image": "img/doors/door_22.jpg",
+      "soundLevel": "iron",
+      "description": "逃生門"
+    },
+    {
+      "id": 23,
+      "threshold": 100,
+      "image": "img/doors/door_23.jpg",
+      "soundLevel": "iron",
+      "description": "監獄門"
+    },
+    {
+      "id": 24,
+      "threshold": 100,
+      "image": "img/doors/door_24.jpg",
+      "soundLevel": "iron",
+      "description": "飛機艙門(外)"
+    },
+    {
+      "id": 25,
+      "threshold": 100,
+      "image": "img/doors/door_25.jpg",
+      "soundLevel": "iron",
+      "description": "飛機艙門(內)"
+    },
+    {
+      "id": 26,
+      "threshold": 100,
+      "image": "img/doors/door_26.jpg",
+      "soundLevel": "iron",
+      "description": "太空艙門"
+    },
+    {
+      "id": 27,
+      "threshold": 100,
+      "image": "img/doors/door_27.jpg",
+      "soundLevel": "iron",
+      "description": "城堡門"
+    },
+    {
+      "id": 28,
+      "threshold": 100,
+      "image": "img/doors/door_28.jpg",
+      "soundLevel": "iron",
+      "description": "會議室門"
+    },
+    {
+      "id": 29,
+      "threshold": 100,
+      "image": "img/doors/door_29.jpg",
+      "soundLevel": "iron",
+      "description": "廁所門"
     }
   ]
 }

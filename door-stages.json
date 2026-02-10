@@ -209,6 +209,34 @@
       "image": "img/doors/door_29.jpg",
       "soundLevel": "iron",
       "description": "廁所門"
+    },
+    {
+      "id": 30,
+      "threshold": 100,
+      "image": "img/doors/door_30.jpg",
+      "soundLevel": "iron",
+      "description": "OK便利商店門"
+    },
+    {
+      "id": 31,
+      "threshold": 100,
+      "image": "img/doors/door_31.jpg",
+      "soundLevel": "iron",
+      "description": "監獄門反向"
+    },
+    {
+      "id": 32,
+      "threshold": 100,
+      "image": "img/doors/door_32.jpg",
+      "soundLevel": "iron",
+      "description": "萬屋門"
+    },
+    {
+      "id": 33,
+      "threshold": 100,
+      "image": "img/doors/door_33.jpg",
+      "soundLevel": "iron",
+      "description": "偷窺倉鼠門"
     }
   ]
 }

@@ -237,6 +237,34 @@
       "image": "img/doors/door_33.jpg",
       "soundLevel": "iron",
       "description": "偷窺倉鼠門"
+    },
+    {
+      "id": 34,
+      "threshold": 100,
+      "image": "img/doors/door_34.jpg",
+      "soundLevel": "iron",
+      "description": "洗衣機門"
+    },
+    {
+      "id": 35,
+      "threshold": 100,
+      "image": "img/doors/door_35.jpg",
+      "soundLevel": "iron",
+      "description": "海底隧道"
+    },
+    {
+      "id": 36,
+      "threshold": 100,
+      "image": "img/doors/door_36.jpg",
+      "soundLevel": "iron",
+      "description": "警察局門"
+    },
+    {
+      "id": 37,
+      "threshold": 100,
+      "image": "img/doors/door_37.jpg",
+      "soundLevel": "iron",
+      "description": "傳送門"
     }
   ]
 }

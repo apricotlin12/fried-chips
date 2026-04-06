@@ -4,11 +4,102 @@
  */
 let playSound = false;
 
+// 每拍幾次門就換下一扇門（可調整以方便測試）
+const DOOR_CHANGE_THRESHOLD = 100;
+
 // 儲存所有門的資料（從 door-stages.json 載入）
 let doorStages = [];
 
 // 記錄上一次顯示的門 ID，避免連續重複
 let lastDoorId = -1;
+
+// 追踪已開過的門的 ID（包括所有門，初始時會加入 id=0）
+let openedDoors = new Set();
+
+// 首次開門時間
+let firstDoorTime = null;
+
+// 完成全部門的時間
+let completedTime = null;
+
+/**
+ * 從 localStorage 載入已開門的記錄
+ */
+function loadDoorsProgress() {
+    try {
+        const saved = localStorage.getItem('openedDoors');
+        if (saved) {
+            openedDoors = new Set(JSON.parse(saved));
+        }
+        
+        const firstTime = localStorage.getItem('firstDoorTime');
+        if (firstTime) {
+            firstDoorTime = firstTime;
+        }
+        
+        const completeTime = localStorage.getItem('completedTime');
+        if (completeTime) {
+            completedTime = completeTime;
+        }
+    } catch (error) {
+        console.error('載入門的進度失敗:', error);
+    }
+}
+
+/**
+ * 儲存已開門的記錄到 localStorage
+ */
+function saveDoorsProgress() {
+    try {
+        localStorage.setItem('openedDoors', JSON.stringify([...openedDoors]));
+        
+        if (firstDoorTime) {
+            localStorage.setItem('firstDoorTime', firstDoorTime);
+        } else {
+            localStorage.removeItem('firstDoorTime');
+        }
+        
+        if (completedTime) {
+            localStorage.setItem('completedTime', completedTime);
+        } else {
+            localStorage.removeItem('completedTime');
+        }
+    } catch (error) {
+        console.error('儲存門的進度失敗:', error);
+    }
+}
+
+/**
+ * 更新進度顯示
+ */
+function updateProgressDisplay() {
+    const progressEl = document.getElementById('doors_progress');
+    const firstTimeEl = document.getElementById('first_time');
+    const completeTimeEl = document.getElementById('complete_time');
+    
+    // 計算總門數（包括所有門）
+    const totalDoors = doorStages.length;
+    
+    if (progressEl) {
+        progressEl.textContent = `已開啟：${openedDoors.size}/${totalDoors}`;
+    }
+    
+    if (firstTimeEl) {
+        if (firstDoorTime) {
+            firstTimeEl.textContent = `首次開門：${new Date(firstDoorTime).toLocaleString('zh-TW')}`;
+        } else {
+            firstTimeEl.textContent = '';
+        }
+    }
+    
+    if (completeTimeEl) {
+        if (completedTime) {
+            completeTimeEl.textContent = `🎉 全部完成：${new Date(completedTime).toLocaleString('zh-TW')}`;
+        } else {
+            completeTimeEl.textContent = '';
+        }
+    }
+}
 
 /**
  * 從 door-stages.json 隨機選擇一扇 id > 0 的門來顯示，
@@ -53,6 +144,26 @@ function setDoorImage(img, count) {
     const randomDoor = selectableDoors[Math.floor(Math.random() * selectableDoors.length)];
     img.src = randomDoor.image;
     lastDoorId = randomDoor.id;
+
+    // 記錄這扇門已被開啟
+    if (!openedDoors.has(randomDoor.id)) {
+        openedDoors.add(randomDoor.id);
+        
+        // 如果是第一扇門（id=0），記錄首次時間
+        if (openedDoors.size === 1 && !firstDoorTime) {
+            firstDoorTime = new Date().toISOString();
+        }
+        
+        // 檢查是否已開完所有門
+        const totalDoors = doorStages.length;
+        if (openedDoors.size === totalDoors && !completedTime) {
+            completedTime = new Date().toISOString();
+        }
+        
+        // 儲存進度並更新顯示
+        saveDoorsProgress();
+        updateProgressDisplay();
+    }
 
     // 以 0.01 的機率顯示角色頭像在右下角（如果現在有顯示就隱藏，沒顯示才可能出現）
     if (characterImg.style.display === "block") {
@@ -128,6 +239,19 @@ async function initOpenDoor() {
         return;
     }
 
+    // 載入已開門的進度
+    loadDoorsProgress();
+
+    // 初始化時確保 id=0 的門已被記錄
+    if (!openedDoors.has(0)) {
+        openedDoors.add(0);
+        // 如果這是第一次，記錄首次時間
+        if (!firstDoorTime) {
+            firstDoorTime = new Date().toISOString();
+        }
+        saveDoorsProgress();
+    }
+
     // 載入音效配置
     let soundConfig;
     try {
@@ -142,20 +266,22 @@ async function initOpenDoor() {
     const img = document.getElementById("door_img");
     const counter = document.getElementById("open_times");
     const resetBtn = document.getElementById("reset_btn");
+    const resetDoorsBtn = document.getElementById("reset_doors_btn");
     const soundToggle = document.getElementById("sound_toggle");
     let count = 0;
 
     // 設定初始畫面與顯示文字
     setDoorImage(img, count);
     counter.textContent = `拍門次數：${count}`;
+    updateProgressDisplay();
 
     // 圖片點擊處理：增加計數、更新畫面、儲存並播放音效，並做震動動畫
     img.addEventListener("click", () => {
         count++;
         counter.textContent = `拍門次數：${count}`;
 
-        // 每拍 100 次就換一扇門
-        if (count % 100 === 0) {
+        // 每拍指定次數就換一扇門
+        if (count % DOOR_CHANGE_THRESHOLD === 0) {
             setDoorImage(img);
         }
 
@@ -173,6 +299,31 @@ async function initOpenDoor() {
 
         counter.textContent = `拍門次數：${count}`;
         setDoorImage(img, count);
+    });
+
+    // 重置拍過的門按鈕：清除所有開門記錄（需要確認）
+    resetDoorsBtn.addEventListener("click", () => {
+        if (confirm("確定要重置所有拍過的門的記錄嗎？\n\n這將會清除：\n- 已開啟的門的數量\n- 首次開門時間\n- 完成時間\n\n此操作無法復原！")) {
+            // 清除記錄
+            openedDoors.clear();
+            firstDoorTime = null;
+            completedTime = null;
+            
+            // 重新加入 id=0（初始門）
+            openedDoors.add(0);
+            firstDoorTime = new Date().toISOString();
+            
+            // 儲存並更新顯示
+            saveDoorsProgress();
+            updateProgressDisplay();
+            
+            // 重置拍門次數
+            count = 0;
+            counter.textContent = `拍門次數：${count}`;
+            setDoorImage(img, count);
+            
+            alert("已重置拍過的門的記錄！");
+        }
     });
 
     // 音效開關：切換全域 playSound 變數控制是否播放音效

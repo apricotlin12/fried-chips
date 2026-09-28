@@ -38,11 +38,87 @@
 <script src="js/import-html.js"></script>
 <script src="js/countdown.js"></script>
 <script>
-  const TIMES = {
-    ACTIVITY_END: "2026-09-29T12:00:00+08:00",
-    OPEN_DOOR: "2026-09-29T15:00:00+08:00"
-    // OPEN_DOOR: "2205-01-01T00:00:00+08:00"
+  const FALLBACK_TIMES = {
+    ACTIVITY_END: "2205-01-14T12:00:00+08:00",
+    OPEN_DOOR: "2205-01-14T15:00:00+08:00"
   };
+
+  const GOOGLE_SHEET_ID = "1udbndPKRsigDa4XuOBDiQqQSfzdqZO37iMZTp2Ij7yk";
+  const GOOGLE_SHEET_GID = "0";
+
+  // 將 Sheet 中的台灣時間轉成帶有時區的 ISO 格式。
+  function parseTaiwanDateTime(value) {
+    const match = String(value || '').trim().match(
+      /^(\d{4})[/-](\d{1,2})[/-](\d{1,2})[ T](\d{1,2}):(\d{2})(?::(\d{2}))?$/
+    );
+    if (!match) return null;
+
+    const [, year, month, day, hour, minute, second = '00'] = match;
+    const pad = number => String(number).padStart(2, '0');
+    const iso = `${year}-${pad(month)}-${pad(day)}T${pad(hour)}:${minute}:${second}+08:00`;
+    return Number.isNaN(new Date(iso).getTime()) ? null : iso;
+  }
+
+  // 資料可持續往下新增：依開始時間排序並使用日期最新的一筆。
+  function selectSchedule(rows) {
+    const schedules = rows
+      .map(row => ({
+        ACTIVITY_END: parseTaiwanDateTime(row.c?.[0]?.v),
+        OPEN_DOOR: parseTaiwanDateTime(row.c?.[1]?.v),
+        note: String(row.c?.[2]?.v || '').trim()
+      }))
+      .filter(schedule => {
+        if (!schedule.ACTIVITY_END || !schedule.OPEN_DOOR) return false;
+        return new Date(schedule.ACTIVITY_END) < new Date(schedule.OPEN_DOOR);
+      })
+      .sort((a, b) => new Date(a.ACTIVITY_END) - new Date(b.ACTIVITY_END));
+
+    if (!schedules.length) throw new Error('Google Sheet 中沒有有效的時間資料');
+
+    return schedules[schedules.length - 1];
+  }
+
+  // 使用 JSONP 讀取公開 Sheet，避免純靜態網站的跨網域限制。
+  function loadTimesFromSheet() {
+    return new Promise((resolve, reject) => {
+      const callbackName = `handleSheetResponse_${Date.now()}`;
+      const script = document.createElement('script');
+      const timeoutId = setTimeout(() => finish(new Error('Google Sheet 載入逾時')), 10000);
+
+      function cleanup() {
+        clearTimeout(timeoutId);
+        delete window[callbackName];
+        script.remove();
+      }
+
+      function finish(error, value) {
+        cleanup();
+        if (error) reject(error);
+        else resolve(value);
+      }
+
+      window[callbackName] = response => {
+        if (response?.status !== 'ok') {
+          finish(new Error(response?.errors?.[0]?.detailed_message || 'Google Sheet 回應錯誤'));
+          return;
+        }
+
+        try {
+          finish(null, selectSchedule(response.table?.rows || []));
+        } catch (error) {
+          finish(error);
+        }
+      };
+
+      const query = encodeURIComponent('select A, B, C where A is not null');
+      const tqx = encodeURIComponent(`out:json;responseHandler:${callbackName}`);
+      script.src = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?gid=${GOOGLE_SHEET_GID}&headers=1&tqx=${tqx}&tq=${query}&cacheBust=${Date.now()}`;
+      script.onerror = () => finish(new Error('無法載入 Google Sheet'));
+      document.head.appendChild(script);
+    });
+  }
+
+  function initializePage(TIMES) {
   const currentTime = Date.now();
 
   // 將 ISO 時間格式化成頁面上顯示的台灣時間標籤，例如：台灣時間 10/21 (二) 12:00
@@ -183,6 +259,14 @@
   updateEndText();
   handleOpenDoorHtml();
   handleOpenDoorSound();
+  }
+
+  loadTimesFromSheet()
+    .then(initializePage)
+    .catch(error => {
+      console.error(`${error.message}，改用頁面內建時間。`);
+      initializePage(FALLBACK_TIMES);
+    });
 </script>
 <script src="js/open-the-door.js"></script>
 </body>
